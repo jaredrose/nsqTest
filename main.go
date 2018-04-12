@@ -13,7 +13,7 @@ func Producer() {
 	if err != nil {
 		panic(err)
 	}
-	if err := p.Publish("test", []byte("hello NSQ!!!")); err != nil { // 发布消息
+	if err := p.Publish("test", []byte("hello jared!!!")); err != nil { // 发布消息
 		panic(err)
 	}
 }
@@ -39,9 +39,13 @@ func Consumer() {
 
 // 主函数
 func main() {
+	//获取全局panic
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println(err)
+		}
+	}()
 	Producer()
 	Consumer()
-	time.Sleep(time.Second * 3)
+	time.Sleep(time.Second * 4)
 }
-
-// 运行将会打印： hello NSQ!!!
